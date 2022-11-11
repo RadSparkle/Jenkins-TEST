@@ -18,9 +18,9 @@ def notifySlack(STATUS, COLOR) {
 env.jarfile
 pipeline {
     agent any
-//    parameters {
-//        gitParameter branch: 'origin/$BRANCH_NAME', name: 'REVISION', type: 'PT_REVISION'
-//    }
+    parameters {
+        gitParameter branch: 'origin/$BRANCH_NAME', name: 'REVISION', type: 'PT_REVISION'
+    }
     environment {
         BUILD_USER_ID = ""
         BUILD_USER = ""
