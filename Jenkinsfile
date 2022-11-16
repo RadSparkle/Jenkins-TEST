@@ -10,7 +10,7 @@ def notifySlack(STATUS, COLOR) {
     if ( user != "null" ) {
         slackSend channel: 'C04A7QD5ELV',
                 message: "[${STATUS}]",
-                color: COLOR, tokenCredentialId: 'SLACK',
+                color: COLOR, tokenCredentialId: 'slack',
                 teamDomain: 'Project'
     }
 }
