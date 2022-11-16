@@ -54,45 +54,45 @@ pipeline {
                 ])
             }
         }
-//        stage('Test & Build') {
-//            steps {
-//                script {
-//                    try {
-//                        sh ("chmod 755 ./gradlew")
-//                        sh ("./gradlew clean build")
+        stage('Test & Build') {
+            steps {
+                script {
+                    try {
+                        sh ("chmod 755 ./gradlew")
+                        sh ("./gradlew clean build")
 //                        env.warfile = sh (script: 'basename build/libs/*.war ROOT.war', returnStdout: true ).trim()
 //                        echo "set File ${env.warfile}.war"
 //                        sh ("ls -la")
-//                    } catch (e) {
-//                        notifySlack("java 빌드 실패", "#FF0000")
-//                    }
-//                }
-//            }
-//        }
-//        stage('SSH transfer') {
-//            steps([$class: 'BapSshPromotionPublisherPlugin']) {
-//                sshPublisher(
-//                        continueOnError: false, failOnError: true,
-//                        publishers: [
-//                                sshPublisherDesc(
-//                                        configName: "dev",
-//                                        verbose: true,
-//                                        transfers: [
-//                                                sshTransfer(
-//                                                        execCommand:mkdir
-//                                                ),
-//                                                sshTransfer(
-//                                                        sourceFiles: "build/libs/${env.warfile}.war",
-//                                                        removePrefix: "build/libs/",
-//                                                        remoteDirectory: "TEST/",
-//                                                        execCommand: "mv /home/jenkins/TEST/${env.warfile}.war /home/jenkins/TEST/ROOT.war"
-//                                                )
-//                                        ]
-//                                )
-//                        ]
-//                )
-//            }
-//        }
+                    } catch (e) {
+                        notifySlack("java 빌드 실패", "#FF0000")
+                    }
+                }
+            }
+        }
+        stage('SSH transfer') {
+            steps([$class: 'BapSshPromotionPublisherPlugin']) {
+                sshPublisher(
+                        continueOnError: false, failOnError: true,
+                        publishers: [
+                                sshPublisherDesc(
+                                        configName: "dev",
+                                        verbose: true,
+                                        transfers: [
+                                                sshTransfer(
+                                                        execCommand:mkdir
+                                                ),
+                                                sshTransfer(
+                                                        sourceFiles: "build/libs/${env.warfile}.war",
+                                                        removePrefix: "build/libs/",
+                                                        remoteDirectory: "TEST/",
+                                                        execCommand: "mv /home/jenkins/TEST/${env.warfile}.war /home/jenkins/TEST/ROOT.war"
+                                                )
+                                        ]
+                                )
+                        ]
+                )
+            }
+        }
     }
     post {
         failure {
