@@ -1,108 +1,25 @@
-#!groovy
-
-def mkdir = """
-          rm -rf /home/jenkins/TEST || exit
-          [[ ! -d "/home/jenkins/TEST" ]] && mkdir /home/jenkins/TEST
-          """ as java.lang.Object
-
 def notifySlack(STATUS, COLOR) {
-    def user = "${BUILD_USER}"
-    if ( user != "null" ) {
-        slackSend channel: 'C04A7QD5ELV',
-                message: "[${STATUS}][${BUILD_USER}] -> [${env.JOB_NAME}[${env.BUILD_NUMBER}]](<${env.BUILD_URL}|Jenkins Open>)",
-                color: COLOR, tokenCredentialId: 'SLACK',
-                teamDomain: 'Project'
-    }
+    slackSend channel: 'C04A7QD5ELV',
+            message: "",
+            color: COLOR, tokenCredentialId: 'slack',
+            teamDomain: 'project-yrv2240'
 }
 
-env.jarfile
-pipeline {
-    agent any
-    parameters {
-        gitParameter branch: 'origin/$BRANCH_NAME', name: 'REVISION', type: 'PT_REVISION'
+node{
+
+    //init stage 시작
+    stage("init"){
+        sh "echo init"
     }
-    environment {
-        BUILD_USER_ID = ""
-        BUILD_USER = ""
-        BUILD_USER_EMAIL = ""
+
+    //build stage 시작
+    stage("build"){
+        sh "echo 'start build' "
     }
-    stages {
-//        stage('check build user') {
-//            steps {
-//                wrap([$class: 'BuildUser']) {
-//                    script {
-//                        BUILD_USER_ID = "${env.BUILD_USER_ID}"
-//                        BUILD_USER = "${env.BUILD_USER}"
-//                        BUILD_USER_EMAIL = "${env.BUILD_USER_EMAIL}"
-//                    }
-//                }
-//                // Test out of wrap
-//                echo "Build User ID: ${BUILD_USER_ID}"
-//                echo "Build User: ${BUILD_USER}"
-//                echo "Build User Email: ${BUILD_USER_EMAIL}"
-//            }
-//        }
-        stage('checkout revision') {
-            steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: "${params.REVISION}"]],
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [],
-                          gitTool: 'Default',
-                          submoduleCfg: [],
-                          userRemoteConfigs: [[url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
-                ])
-            }
-        }
-        stage('Test & Build') {
-            steps {
-                script {
-                    try {
-                        sh ("chmod 755 ./gradlew")
-                        sh ("./gradlew clean build")
-                        env.warfile = sh (script: 'basename -s .war build/libs/test.war', returnStdout: true ).trim()
-                        echo "set File ${env.warfile}.war"
-                        sh ("ls -la")
-                    } catch (e) {
-                        jandi_body("java 빌드 실패", "#FF0000")
-                    }
-                }
-            }
-        }
-        stage('SSH transfer') {
-            steps([$class: 'BapSshPromotionPublisherPlugin']) {
-                sshPublisher(
-                        continueOnError: false, failOnError: true,
-                        publishers: [
-                                sshPublisherDesc(
-                                        configName: "prod",
-                                        verbose: true,
-                                        transfers: [
-                                                sshTransfer(
-                                                        execCommand:mkdir
-                                                ),
-                                                sshTransfer(
-                                                        sourceFiles: "build/libs/${env.warfile}.war",
-                                                        removePrefix: "build/libs/",
-                                                        remoteDirectory: "rozeus_novel/",
-                                                        execCommand: "mv /home/jenkins/TEST/${env.warfile}.war /home/jenkins/TEST/ROOT.war"
-                                                )
-                                        ]
-                                )
-                        ]
-                )
-            }
-        }
-    }
-    post {
-        failure {
-            notifySlack("빌드 파이프라인 실패", "#FF0000")
-        }
-        success {
-            notifySlack("빌드 파이프라인 성공", "#00FF00")
-        }
-        always {
-            cleanWs()
-        }
+
+    //deploy stage 시작
+    stage("deploy"){
+        sh "echo 'start deploy' "
     }
 }
+notifySlack("빌드 파이프라인 성공", "#00FF00")
