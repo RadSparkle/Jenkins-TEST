@@ -9,7 +9,7 @@ def notifySlack(STATUS, COLOR) {
     def user = "${BUILD_USER}"
     if ( user != "null" ) {
         slackSend channel: 'C04A7QD5ELV',
-                message: "[${STATUS}][${BUILD_USER}] -> [${env.JOB_NAME}[${env.BUILD_NUMBER}]](<${env.BUILD_URL}|Jenkins Open>)",
+                message: "[${STATUS}]",
                 color: COLOR, tokenCredentialId: 'SLACK',
                 teamDomain: 'Project'
     }
