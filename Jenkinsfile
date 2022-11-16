@@ -42,18 +42,18 @@ pipeline {
 //                echo "Build User Email: ${BUILD_USER_EMAIL}"
 //            }
 //        }
-        stage('checkout revision') {
-            steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: "${params.REVISION}"]],
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [],
-                          gitTool: 'Default',
-                          submoduleCfg: [],
-                          userRemoteConfigs: [[url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
-                ])
-            }
-        }
+//        stage('checkout revision') {
+//            steps {
+//                checkout([$class: 'GitSCM',
+//                          branches: [[name: "${params.REVISION}"]],
+//                          doGenerateSubmoduleConfigurations: false,
+//                          extensions: [],
+//                          gitTool: 'Default',
+//                          submoduleCfg: [],
+//                          userRemoteConfigs: [[url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
+//                ])
+//            }
+//        }
         stage('Test & Build') {
             steps {
                 script {
