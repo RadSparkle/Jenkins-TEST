@@ -60,11 +60,11 @@ pipeline {
                     try {
                         sh ("chmod 755 ./gradlew")
                         sh ("./gradlew clean build")
-                        env.warfile = sh (script: 'basename -s .war build/libs/test.war', returnStdout: true ).trim()
+                        env.warfile = sh (script: 'basename build/libs/*.war .war', returnStdout: true ).trim()
                         echo "set File ${env.warfile}.war"
                         sh ("ls -la")
                     } catch (e) {
-                        jandi_body("java 빌드 실패", "#FF0000")
+                        notifySlack("java 빌드 실패", "#FF0000")
                     }
                 }
             }
@@ -84,7 +84,7 @@ pipeline {
                                                 sshTransfer(
                                                         sourceFiles: "build/libs/${env.warfile}.war",
                                                         removePrefix: "build/libs/",
-                                                        remoteDirectory: "rozeus_novel/",
+                                                        remoteDirectory: "TEST/",
                                                         execCommand: "mv /home/jenkins/TEST/${env.warfile}.war /home/jenkins/TEST/ROOT.war"
                                                 )
                                         ]
