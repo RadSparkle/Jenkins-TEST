@@ -6,7 +6,7 @@ def mkdir = """
           """ as java.lang.Object
 
 def notifySlack(STATUS, COLOR) {
-    def user = "${BUILD_USER}"
+//    def user = "${BUILD_USER}"
     if ( user != "null" ) {
         slackSend channel: 'C04A7QD5ELV',
                 message: "[${STATUS}]",
