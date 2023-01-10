@@ -49,8 +49,8 @@ pipeline {
         stage('Start') {
                     steps {
                         slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "배포 시작: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ${env.BUILD_USER}")
-                    }
-                }
+                           }
+        }
         stage('Test & Build') {
                     steps {
                         script {
@@ -65,7 +65,7 @@ pipeline {
                             }
                         }
                     }
-                }
+        }
 
         stage('SSH transfer') {
                     steps([$class: 'BapSshPromotionPublisherPlugin']) {
@@ -86,6 +86,7 @@ pipeline {
                                         )
                                     ]
                                  )
+    }
     }
     post {
         success {
