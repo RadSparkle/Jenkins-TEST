@@ -86,28 +86,6 @@ pipeline {
                                         )
                                     ]
                                  )
-        stage('bin folder init') {
-                    steps([$class: 'BapSshPromotionPublisherPlugin']) {
-                        sshPublisher(
-                                continueOnError: false, failOnError: true,
-                                publishers: [
-                                        sshPublisherDesc(
-                                                configName: "${params.SERVER}",
-                                                verbose: true,
-                                                transfers: [
-                                                        sshTransfer(execCommand:
-                                                                '''
-                                        rm -rf /home/jenkins/bin || exit
-                                        [[ ! -d "/home/jenkins/bin" ]] && mkdir /home/jenkins/bin
-                                        cd /home/jenkins/bin || exit
-                                        '''
-                                                        )
-                                                ]
-                                        )
-                                ]
-                        )
-                    }
-                }
     }
     post {
         success {
