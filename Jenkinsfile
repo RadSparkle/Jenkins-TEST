@@ -65,28 +65,6 @@ pipeline {
                         }
                     }
         }
-        stage('SSH transfer') {
-                    steps([$class: 'BapSshPromotionPublisherPlugin']) {
-                        sshPublisher(
-                          continueOnError: false, failOnError: true,
-                          publishers: [sshPublisherDesc(
-                          configName: "prod",
-                          verbose: true,
-                          transfers: [
-                                     sshTransfer(
-                                     execCommand:mkdir
-                                     ),
-                                     sshTransfer(
-                                        sourceFiles: "build/libs/${env.jarfile}.jar",
-                                        removePrefix: "build/libs/",
-                                        remoteDirectory: "api/",
-                                        execCommand: "ls -al /home/jenkins/api"
-                                     )
-                                    ]
-                                 )
-                          )
-                    }
-        }
     }
     post {
         success {
