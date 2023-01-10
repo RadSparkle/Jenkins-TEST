@@ -17,7 +17,6 @@ pipeline {
         BUILD_USER = ""
         BUILD_USER_EMAIL = ""
     }
-
     stages {
         stage('check build user') {
                 steps {
@@ -74,22 +73,21 @@ pipeline {
                           configName: "prod",
                           verbose: true,
                           transfers: [
-                                 sshTransfer(
-                                 execCommand:mkdir
-                                 ),
+                                     sshTransfer(
+                                     execCommand:mkdir
+                                     ),
                                      sshTransfer(
                                         sourceFiles: "build/libs/${env.jarfile}.jar",
                                         removePrefix: "build/libs/",
                                         remoteDirectory: "api/",
                                         execCommand: "ls -al /home/jenkins/api"
-                                        )
+                                     )
                                     ]
                                  )
-                          ]
-                    )
+                          )
                     }
-
         }
+    }
     post {
         success {
             slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "배포 성공: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
