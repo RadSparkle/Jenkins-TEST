@@ -13,8 +13,8 @@ pipeline {
     }
     environment {
         SLACK_CHANNEL = '#배포방'
-        BUILD_USER_ID = ""
-        BUILD_USER = ""
+        BUILD_USER_ID = "테스트유저"
+        BUILD_USER = "테스트유저"
     }
     stages {
         stage('check build user') {
