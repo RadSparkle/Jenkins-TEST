@@ -24,7 +24,6 @@ pipeline {
                         script {
                             BUILD_USER_ID = "${env.BUILD_USER_ID}"
                             BUILD_USER = "${env.BUILD_USER}"
-                            BUILD_USER_EMAIL = "${env.BUILD_USER_EMAIL}"
                         }
                     }
                     // Test out of wrap
@@ -33,38 +32,38 @@ pipeline {
                     echo "Build User Email: ${BUILD_USER_EMAIL}"
                 }
             }
-        stage('checkout revision') {
-                    steps {
-                        checkout([$class: 'GitSCM',
-                                  branches: [[name: "${params.REVISION}"]],
-                                  doGenerateSubmoduleConfigurations: false,
-                                  extensions: [],
-                                  gitTool: 'Default',
-                                  submoduleCfg: [],
-                                  userRemoteConfigs: [url: 'https://github.com/RadSparkle/Jenkins-TEST.git']
-                        ])
-                    }
-                }
-        stage('Start') {
-                    steps {
-                        slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "배포 시작: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ${env.BUILD_USER}")
-                           }
-        }
-        stage('Test & Build') {
-                    steps {
-                        script {
-                            try {
-                                sh ("chmod 755 ./gradlew")
-                                sh ("./gradlew clean build")
-                                env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
-                                echo "set File ${env.jarfile}.jar"
-                                sh ("ls -la")
-                            } catch (e) {
-                                jandi_body("java 빌드 실패", "#FF0000")
-                            }
-                        }
-                    }
-        }
+//         stage('checkout revision') {
+//                     steps {
+//                         checkout([$class: 'GitSCM',
+//                                   branches: [[name: "${params.REVISION}"]],
+//                                   doGenerateSubmoduleConfigurations: false,
+//                                   extensions: [],
+//                                   gitTool: 'Default',
+//                                   submoduleCfg: [],
+//                                   userRemoteConfigs: [url: 'https://github.com/RadSparkle/Jenkins-TEST.git']
+//                         ])
+//                     }
+//                 }
+//         stage('Start') {
+//                     steps {
+//                         slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "배포 시작: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ${env.BUILD_USER}")
+//                            }
+//         }
+//         stage('Test & Build') {
+//                     steps {
+//                         script {
+//                             try {
+//                                 sh ("chmod 755 ./gradlew")
+//                                 sh ("./gradlew clean build")
+//                                 env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
+//                                 echo "set File ${env.jarfile}.jar"
+//                                 sh ("ls -la")
+//                             } catch (e) {
+//                                 jandi_body("java 빌드 실패", "#FF0000")
+//                             }
+//                         }
+//                     }
+//         }
     }
     post {
         success {
