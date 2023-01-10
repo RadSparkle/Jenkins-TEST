@@ -81,8 +81,8 @@ pipeline {
                                      sshTransfer(
                                         sourceFiles: "build/libs/${env.jarfile}.jar",
                                         removePrefix: "build/libs/",
-                                        remoteDirectory: "rozeus/",
-                                        execCommand: "ls -al /home/jenkins/rozeus"
+                                        remoteDirectory: "api/",
+                                        execCommand: "ls -al /home/jenkins/api"
                                         )
                                     ]
                                  )
