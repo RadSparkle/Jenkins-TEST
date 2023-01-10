@@ -20,12 +20,10 @@ pipeline {
     stages {
         stage('check build user') {
                 steps {
-                    wrap([$class: 'BuildUser']) {
                         script {
                             BUILD_USER_ID = "${env.BUILD_USER_ID}"
                             BUILD_USER = "${env.BUILD_USER}"
                         }
-                    }
                     // Test out of wrap
                     echo "Build User ID: ${BUILD_USER_ID}"
                     echo "Build User: ${BUILD_USER}"
