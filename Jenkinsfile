@@ -2,7 +2,7 @@ pipeline {
     agent none
 
     environment {
-        SLACK_CHANNEL = '#Slack'
+        SLACK_CHANNEL = '#배포방'
     }
 
     stages {
