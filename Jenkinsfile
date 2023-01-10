@@ -15,7 +15,6 @@ pipeline {
         SLACK_CHANNEL = '#배포방'
         BUILD_USER_ID = ""
         BUILD_USER = ""
-        BUILD_USER_EMAIL = ""
     }
     stages {
         stage('check build user') {
@@ -27,7 +26,6 @@ pipeline {
                     // Test out of wrap
                     echo "Build User ID: ${BUILD_USER_ID}"
                     echo "Build User: ${BUILD_USER}"
-                    echo "Build User Email: ${BUILD_USER_EMAIL}"
                 }
             }
 //         stage('checkout revision') {
