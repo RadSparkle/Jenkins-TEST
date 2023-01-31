@@ -30,7 +30,7 @@ pipeline {
             }
         stage('git clone') {
                     steps() {
-                        git 'https://github.com/RadSparkle/Jenkins-TEST.git'
+                        git branch:'main', url 'https://github.com/RadSparkle/Jenkins-TEST.git'
                     }
         }
 //         stage('checkout revision') {
