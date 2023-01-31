@@ -39,6 +39,7 @@ pipeline {
                                         submoduleCfg                     : [],
                                         userRemoteConfigs                : [[url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
                                 ]
+                                )
                     }
         }
 //         stage('Start') {
