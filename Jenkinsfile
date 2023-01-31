@@ -30,7 +30,7 @@ pipeline {
         }
         stage('checkout revision') {
                     steps {
-                        checkout([$class: 'GitSCM',
+                        checkout([
                                   doGenerateSubmoduleConfigurations: false,
                                   extensions: [],
                                   gitTool: 'Default',
