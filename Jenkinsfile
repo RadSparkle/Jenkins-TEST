@@ -7,6 +7,7 @@ def mkdir = """
           """ as java.lang.Object
 
 pipeline {
+    agent any
     parameters {
         gitParameter branch: 'origin/$BRANCH_NAME', name: 'REVISION', type: 'PT_REVISION'
     }
