@@ -33,12 +33,11 @@ pipeline {
                         checkout(
                                 [
                                         $class                           : 'GitSCM',
-                                        branches                         : [[name: '${BRANCH_SELECTOR}']],
+                                        branches                         : [[name: '${BRANCH_NAME}']],
                                         doGenerateSubmoduleConfigurations: false,
                                         extensions                       : [],
                                         submoduleCfg                     : [],
-                                        credentialsId                    : 'Admin',
-                                        userRemoteConfigs                : [[url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
+                                        userRemoteConfigs                : [[credentialsId : 'Admin', name:'origin',url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
                                 ]
                                 )
                     }
