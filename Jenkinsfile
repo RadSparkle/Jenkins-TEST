@@ -52,9 +52,9 @@ pipeline {
                         script {
                             try {
                                 sh ("chmod 755 ./gradlew")
-                                sh ("./gradlew clean build")
-                                env.warfile = sh (script: 'basename build/libs/*.war .war', returnStdout: true ).trim()
-                                echo "set File ${env.jarfile}.war"
+                                sh ("./gradlew clean bootJar")
+                                env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
+                                echo "set File ${env.jarfile}.jar"
                                 sh ("ls -la")
                             } catch (e) {
                                 slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "빌드 실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
