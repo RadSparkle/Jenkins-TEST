@@ -31,7 +31,7 @@ pipeline {
         stage('Clone') {
                     steps {
                         echo 'Clone'
-                        git branch: 'main', credentialsId:'RadSparkle', url: 'https://github.com/RadSparkle/Jenkins-TEST.git'
+                        git branch: 'main', credentialsId:'Admin', url: 'https://github.com/RadSparkle/Jenkins-TEST.git'
                     }
         }
 //         stage('checkout revision') {
