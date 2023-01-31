@@ -53,7 +53,7 @@ pipeline {
                             try {
                                 sh ("chmod 755 ./gradlew")
                                 sh ("./gradlew clean build")
-                                env.jarfile = sh (script: 'basename build/libs/*.war .war', returnStdout: true ).trim()
+                                env.warfile = sh (script: 'basename build/libs/*.war .war', returnStdout: true ).trim()
                                 echo "set File ${env.jarfile}.war"
                                 sh ("ls -la")
                             } catch (e) {
