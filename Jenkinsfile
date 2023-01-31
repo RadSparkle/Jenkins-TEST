@@ -27,13 +27,13 @@ pipeline {
                     echo "Build User ID: ${BUILD_USER_ID}"
                     echo "Build User: ${BUILD_USER}"
                 }
-            }
-    stage('Clone') {
-                steps {
-                    echo 'Clone'
-                    git branch: 'main', url: 'https://github.com/RadSparkle/Jenkins-TEST.git'
-                }
-    }
+        }
+        stage('Clone') {
+                    steps {
+                        echo 'Clone'
+                        git branch: 'main', credentialsId:'RadSparkle', url: 'https://github.com/RadSparkle/Jenkins-TEST.git'
+                    }
+        }
 //         stage('checkout revision') {
 //                     steps {
 //                         checkout([$class: 'GitSCM',
