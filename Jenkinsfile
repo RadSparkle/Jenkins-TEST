@@ -28,6 +28,12 @@ pipeline {
                     echo "Build User: ${BUILD_USER}"
                 }
             }
+    stage('Clone') {
+                steps {
+                    echo 'Clone'
+                    git branch: 'main', url: 'https://github.com/RadSparkle/Jenkins-TEST.git'
+                }
+    }
 //         stage('checkout revision') {
 //                     steps {
 //                         checkout([$class: 'GitSCM',
