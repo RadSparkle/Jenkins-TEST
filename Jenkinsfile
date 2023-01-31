@@ -37,7 +37,7 @@ pipeline {
                                         doGenerateSubmoduleConfigurations: false,
                                         extensions                       : [],
                                         submoduleCfg                     : [],
-                                        credentialsId                    : 'Admin'
+                                        credentialsId                    : 'Admin',
                                         userRemoteConfigs                : [[url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
                                 ]
                                 )
