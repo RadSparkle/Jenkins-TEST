@@ -57,6 +57,7 @@ pipeline {
                                 env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
                                 echo "set File ${env.jarfile}.jar"
                                 sh ("ls -la")
+                                sh ('whoami')
                                 sh ("chmod 755 build/libs/*.jar")
                                 sh ("cp build/libs/*.jar /home/jenkins/api/${env.jarfile}.jar")
                             } catch (e) {
