@@ -28,17 +28,13 @@ pipeline {
                     echo "Build User: ${BUILD_USER}"
                 }
         }
-        stage('checkout revision') {
+        stage('checkout') {
                     steps {
                         checkout([
-                                  doGenerateSubmoduleConfigurations: false,
-                                  extensions: [],
-                                  gitTool: 'Default',
-                                  submoduleCfg: [],
-                                  userRemoteConfigs: [url: 'https://github.com/RadSparkle/Jenkins-TEST.git']
+                            git branch: 'main', credentialsId:'admin',url :'https://github.com/RadSparkle/Jenkins-TEST.git'
                         ])
                     }
-                }
+        }
 //         stage('Start') {
 //                     steps {
 //                         slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "배포 시작: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ${env.BUILD_USER}")
