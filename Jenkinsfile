@@ -31,7 +31,7 @@ pipeline {
         stage('checkout') {
                     steps {
                         checkout([
-                            git branch: 'main', credentialsId:'Admin',url :'https://github.com/RadSparkle/Jenkins-TEST.git'
+                            git branch: 'origin/$BRANCH_NAME', credentialsId:'Admin',url :'https://github.com/RadSparkle/Jenkins-TEST.git'
                         ])
                     }
         }
