@@ -8,9 +8,9 @@ def mkdir = """
 
 pipeline {
     agent any
-    parameters {
-        gitParameter branch: 'origin/$BRANCH_NAME', name: 'REVISION', type: 'PT_REVISION'
-    }
+//     parameters {
+//         gitParameter branch: 'origin/$BRANCH_NAME', name: 'REVISION', type: 'PT_REVISION'
+//     }
     environment {
         SLACK_CHANNEL = '#배포방'
         BUILD_USER_ID = "테스트유저"
