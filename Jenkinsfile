@@ -28,6 +28,11 @@ pipeline {
                     echo "Build User: ${BUILD_USER}"
                 }
             }
+        stage('git clone') {
+                    steps() {
+                        git 'https://github.com/RadSparkle/Jenkins-TEST.git'
+                    }
+        }
 //         stage('checkout revision') {
 //                     steps {
 //                         checkout([$class: 'GitSCM',
@@ -45,21 +50,21 @@ pipeline {
 //                         slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "배포 시작: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ${env.BUILD_USER}")
 //                            }
 //         }
-        stage('Test & Build') {
-                    steps {
-                        script {
-                            try {
-                                sh ("chmod 755 ./gradlew")
-                                sh ("./gradlew clean build")
-                                env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
-                                echo "set File ${env.jarfile}.jar"
-                                sh ("ls -la")
-                            } catch (e) {
-                                slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "빌드 실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-                            }
-                        }
-                    }
-        }
+//         stage('Test & Build') {
+//                     steps {
+//                         script {
+//                             try {
+//                                 sh ("chmod 755 ./gradlew")
+//                                 sh ("./gradlew clean build")
+//                                 env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
+//                                 echo "set File ${env.jarfile}.jar"
+//                                 sh ("ls -la")
+//                             } catch (e) {
+//                                 slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "빌드 실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+//                             }
+//                         }
+//                     }
+//         }
     }
     post {
         success {
