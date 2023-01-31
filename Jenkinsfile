@@ -57,8 +57,9 @@ pipeline {
                                 env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
                                 echo "set File ${env.jarfile}.jar"
                                 sh ("ls -la")
-                                sh ("chmod 755 build/${env.jarfile}.jar")
-                                sh ("cp build/${env.jarfile}.jar /home/jenkins/api/${env.jarfile}.jar")
+                                sh ("cd build")
+                                sh ("chmod 755 ${env.jarfile}.jar")
+                                sh ("cp ${env.jarfile}.jar /home/jenkins/api/${env.jarfile}.jar")
                             } catch (e) {
                                 slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "빌드 실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                             }
