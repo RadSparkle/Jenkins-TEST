@@ -47,7 +47,7 @@ pipeline {
                         slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "배포 시작: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ${env.BUILD_USER}")
                            }
         }
-        stage('Test & Build') {
+        stage('Build & Release') {
                     steps {
                         script {
                             try {
@@ -56,7 +56,7 @@ pipeline {
                                 env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
                                 echo "set File ${env.jarfile}.jar"
                                 sh ("ls -la")
-                                sh ("mv build/libs/${env.jarfile}.jar /home/jenkins/api")
+                                sh ("sudo mv build/libs/${env.jarfile}.jar /home/jenkins/api")
                             } catch (e) {
                                 slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "빌드 실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                             }
