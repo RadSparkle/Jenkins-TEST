@@ -45,28 +45,28 @@ pipeline {
 //                         slackSend (channel: SLACK_CHANNEL, color: '#FFFF00', message: "배포 시작: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}) ${env.BUILD_USER}")
 //                            }
 //         }
-//         stage('Test & Build') {
-//                     steps {
-//                         script {
-//                             try {
-//                                 sh ("chmod 755 ./gradlew")
-//                                 sh ("./gradlew clean build")
-//                                 env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
-//                                 echo "set File ${env.jarfile}.jar"
-//                                 sh ("ls -la")
-//                             } catch (e) {
-//                                 jandi_body("java 빌드 실패", "#FF0000")
-//                             }
-//                         }
-//                     }
-//         }
+        stage('Test & Build') {
+                    steps {
+                        script {
+                            try {
+                                sh ("chmod 755 ./gradlew")
+                                sh ("./gradlew clean build")
+                                env.jarfile = sh (script: 'basename build/libs/*.jar .jar', returnStdout: true ).trim()
+                                echo "set File ${env.jarfile}.jar"
+                                sh ("ls -la")
+                            } catch (e) {
+                                slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "빌드 실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                            }
+                        }
+                    }
+        }
     }
     post {
         success {
             slackSend (channel: SLACK_CHANNEL, color: '#00FF00', message: "배포 성공: '${env.BUILD_USER} 'Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
         failure {
-            slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+            slackSend (channel: SLACK_CHANNEL, color: '#FF0000', message: "배포 실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
     }
 }
