@@ -30,9 +30,15 @@ pipeline {
         }
         stage('checkout') {
                     steps {
-                        checkout([
-                            git branch: 'origin/$BRANCH_NAME', credentialsId:'Admin',url :'https://github.com/RadSparkle/Jenkins-TEST.git'
-                        ])
+                        checkout(
+                                [
+                                        $class                           : 'GitSCM',
+                                        branches                         : [[name: '${BRANCH_SELECTOR}']],
+                                        doGenerateSubmoduleConfigurations: false,
+                                        extensions                       : [],
+                                        submoduleCfg                     : [],
+                                        userRemoteConfigs                : [[url: 'https://github.com/RadSparkle/Jenkins-TEST.git']]
+                                ]
                     }
         }
 //         stage('Start') {
