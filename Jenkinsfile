@@ -31,7 +31,6 @@ pipeline {
         stage('checkout revision') {
                     steps {
                         checkout([$class: 'GitSCM',
-                                  branches: [[name: "${params.REVISION}"]],
                                   doGenerateSubmoduleConfigurations: false,
                                   extensions: [],
                                   gitTool: 'Default',
